@@ -7,13 +7,19 @@ function activate(context) {
     console.log('Congratulations, your extension "prototype-generator" is now active!');
     //Register the function as 'createPrototypes' Command
     context.subscriptions.push(vscode.commands.registerCommand("prototype-generator.createPrototypes", execute));
+    function validate(document) {
+        return document.languageId === "c";
+    }
     function execute() {
         var _a;
-        console.log("Creating prototypes");
         const document = (_a = vscode.window.activeTextEditor) === null || _a === void 0 ? void 0 : _a.document;
         if (!document) {
             return;
         }
+        if (!validate(document)) {
+            return;
+        }
+        console.log("Creating prototypes");
         //Get Function declarations
         const decs = getFunctionDeclarations(document);
         const declarations = decs.map((dec) => Method_1.Method.parseToMethod(dec));

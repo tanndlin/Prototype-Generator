@@ -14,13 +14,21 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  function execute() {
-    console.log("Creating prototypes");
+  function validate(document: vscode.TextDocument): boolean {
+    return document.languageId === "c";
+  }
 
+  function execute() {
     const document = vscode.window.activeTextEditor?.document;
     if (!document) {
       return;
     }
+
+    if (!validate(document)) {
+      return;
+    }
+
+    console.log("Creating prototypes");
 
     //Get Function declarations
     const decs: vscode.TextLine[] = getFunctionDeclarations(document);
