@@ -15,7 +15,7 @@ class Method {
             s += `${p.type}`;
             //If its a pointer, preserve it
             if (p.name.startsWith("*")) {
-                s += "*";
+                s += " *";
             }
             //If there are params after this one, put a comma
             if (this.params.indexOf(p) < this.params.length - 1) {

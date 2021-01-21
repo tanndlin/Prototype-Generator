@@ -5,7 +5,8 @@ const vscode = require("vscode");
 const Method_1 = require("./classes/Method");
 function activate(context) {
     console.log('Congratulations, your extension "prototype-generator" is now active!');
-    context.subscriptions.push(vscode.commands.registerCommand("prototype-generator.createPrototypes", () => {
+    context.subscriptions.push(vscode.commands.registerCommand("prototype-generator.createPrototypes", execute));
+    function execute() {
         var _a;
         console.log("Creating prototypes");
         const document = (_a = vscode.window.activeTextEditor) === null || _a === void 0 ? void 0 : _a.document;
@@ -38,7 +39,7 @@ function activate(context) {
                 });
             });
         });
-    }));
+    }
     function getFunctionPrototypes(document, mainLine) {
         const prototypes = [];
         for (let i = 0; i < mainLine; i++) {

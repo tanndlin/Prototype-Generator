@@ -9,52 +9,54 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "prototype-generator.createPrototypes",
-      () => {
-        console.log("Creating prototypes");
-
-        const document = vscode.window.activeTextEditor?.document;
-        if (!document) {
-          return;
-        }
-
-        const decs: vscode.TextLine[] = getFunctionDeclarations(document);
-        const declarations = decs.map((dec) => Method.parseToMethod(dec));
-        console.log(declarations);
-
-        const mainLine = decs[0].lineNumber;
-        console.log(mainLine);
-
-        const prototypes: number[] = getFunctionPrototypes(document, mainLine);
-        console.log(prototypes);
-
-        vscode.window.showTextDocument(document, 1, false).then((e) => {
-          e.edit((edit) => {
-            prototypes.forEach((lineNum) => {
-              const start = new vscode.Position(lineNum, 0);
-              const end = new vscode.Position(lineNum + 1, 0);
-
-              edit.delete(new vscode.Range(start, end));
-            });
-
-            //If there were no prototypes we need the extra space to seperate from includes
-            if (prototypes.length === 0) {
-              edit.insert(new vscode.Position(mainLine - 1, 0), "\n");
-            }
-            declarations.forEach((dec) => {
-              if (dec.name === "main") {
-                return;
-              }
-
-              edit.insert(
-                new vscode.Position(mainLine - 1, 0),
-                dec.createPrototype()
-              );
-            });
-          });
-        });
-      }
+      execute
     )
   );
+
+  function execute() {
+    console.log("Creating prototypes");
+
+    const document = vscode.window.activeTextEditor?.document;
+    if (!document) {
+      return;
+    }
+
+    const decs: vscode.TextLine[] = getFunctionDeclarations(document);
+    const declarations = decs.map((dec) => Method.parseToMethod(dec));
+    console.log(declarations);
+
+    const mainLine = decs[0].lineNumber;
+    console.log(mainLine);
+
+    const prototypes: number[] = getFunctionPrototypes(document, mainLine);
+    console.log(prototypes);
+
+    vscode.window.showTextDocument(document, 1, false).then((e) => {
+      e.edit((edit) => {
+        prototypes.forEach((lineNum) => {
+          const start = new vscode.Position(lineNum, 0);
+          const end = new vscode.Position(lineNum + 1, 0);
+
+          edit.delete(new vscode.Range(start, end));
+        });
+
+        //If there were no prototypes we need the extra space to seperate from includes
+        if (prototypes.length === 0) {
+          edit.insert(new vscode.Position(mainLine - 1, 0), "\n");
+        }
+        declarations.forEach((dec) => {
+          if (dec.name === "main") {
+            return;
+          }
+
+          edit.insert(
+            new vscode.Position(mainLine - 1, 0),
+            dec.createPrototype()
+          );
+        });
+      });
+    });
+  }
 
   function getFunctionPrototypes(
     document: vscode.TextDocument,
