@@ -2,7 +2,7 @@
 
 This Prototype Generator will create and update function prototypes in your C code.
 
-#How to use
+# How to use
 
 Once installed, use Ctrl + Shift + P to open the command pallete and select `Create Prototypes`
 
