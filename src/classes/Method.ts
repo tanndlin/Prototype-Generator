@@ -28,7 +28,10 @@ export class Method {
       s += `${p.type}`;
       //If its a pointer, preserve the *
       if (p.name.startsWith("*")) {
-        s += " *";
+        s += " ";
+        for (let i = 0; p.name[i] === "*"; i++) {
+          s += "*";
+        }
       }
 
       //If there are params after this one, put a comma
