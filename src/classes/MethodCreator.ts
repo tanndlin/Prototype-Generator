@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { PrototypeCreator } from "./PrototypeCreator";
 
 export class MethodCreator {
-  static DEFAULT_RETURNS: Record<string, any> = {
+  static defaultReturns: Record<string, any> = {
     int: -1,
     void: "",
     float: -1,
@@ -37,7 +37,7 @@ export class MethodCreator {
       param = await vscode.window.showInputBox();
     }
 
-    let defaultReturn = MethodCreator.DEFAULT_RETURNS[returnType];
+    let defaultReturn = MethodCreator.defaultReturns[returnType];
 
     const targetLine = document.lineCount;
     await vscode.window.showTextDocument(document, 1, false).then(async (e) => {
