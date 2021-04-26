@@ -87,7 +87,7 @@ export class MyCodeLensProvider implements vscode.CodeLensProvider {
     let times = 0;
     for (let i = 0; i < document.lineCount; i++) {
       const text = document.lineAt(i).text;
-      if (text.includes(methodName) && !text.trim().startsWith("//")) {
+      if (text.includes(`${methodName}(`) && !text.trim().startsWith("//")) {
         console.log(text, i);
         times++;
       }
