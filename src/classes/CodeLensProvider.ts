@@ -73,7 +73,7 @@ export class MyCodeLensProvider implements vscode.CodeLensProvider {
   ): number {
     let methodName = document
       .lineAt(lineNum)
-      .text.replace("*", "")
+      .text.replace(new RegExp(/\*/g), "")
       .split(" ")
       .filter((s) => s.includes("("))[0];
     methodName = methodName.slice(0, methodName.indexOf("("));
@@ -82,14 +82,18 @@ export class MyCodeLensProvider implements vscode.CodeLensProvider {
       return 0;
     }
 
+    console.log(`Getting refs for ${methodName}`);
+
     let times = 0;
     for (let i = 0; i < document.lineCount; i++) {
       const text = document.lineAt(i).text;
       if (text.includes(methodName) && !text.trim().startsWith("//")) {
+        console.log(text, i);
         times++;
       }
     }
 
+    console.log("\n");
     return times - 2;
   }
 }
