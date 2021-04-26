@@ -104,7 +104,7 @@ export class PrototypeCreator {
     return prototypes;
   }
 
-  private static getFunctionDeclarations(
+  public static getFunctionDeclarations(
     document: vscode.TextDocument
   ): vscode.TextLine[] {
     const decs = [];
@@ -137,7 +137,7 @@ export class PrototypeCreator {
   }
 
   //Count the { } to see how indented a line is
-  private static getIndentLevel(document: vscode.TextDocument, line: number) {
+  public static getIndentLevel(document: vscode.TextDocument, line: number) {
     //Start at the first line, and go to target line counting indents
     let indentLevel = 0;
     for (let i = 0; i < line; i++) {

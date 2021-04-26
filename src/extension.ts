@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import { PrototypeCreator } from "./classes/PrototypeCreator";
 import { MethodCreator } from "./classes/MethodCreator";
+import { MyCodeLensProvider } from "./classes/CodeLensProvider";
+import { Helper } from "./classes/Helper";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(
@@ -20,6 +22,25 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "prototype-generator.createMethod",
       MethodCreator.execute
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "prototype-generator.getMethodReport",
+      Helper.getMethodReport
+    )
+  );
+
+  let docSelector = {
+    language: "c",
+    scheme: "file",
+  };
+
+  context.subscriptions.push(
+    vscode.languages.registerCodeLensProvider(
+      docSelector,
+      new MyCodeLensProvider()
     )
   );
 }

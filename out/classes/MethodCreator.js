@@ -37,7 +37,7 @@ class MethodCreator {
                 params.push(param);
                 param = yield vscode.window.showInputBox();
             }
-            let defaultReturn = MethodCreator.DEFAULT_RETURNS[returnType];
+            let defaultReturn = MethodCreator.defaultReturns[returnType];
             const targetLine = document.lineCount;
             yield vscode.window.showTextDocument(document, 1, false).then((e) => __awaiter(this, void 0, void 0, function* () {
                 //Delete pre-existing prototypes
@@ -51,7 +51,7 @@ class MethodCreator {
     }
 }
 exports.MethodCreator = MethodCreator;
-MethodCreator.DEFAULT_RETURNS = {
+MethodCreator.defaultReturns = {
     int: -1,
     void: "",
     float: -1,
