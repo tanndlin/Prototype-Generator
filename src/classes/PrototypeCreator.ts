@@ -1,9 +1,9 @@
-import * as vscode from "vscode";
-import { Method } from "./Method";
+import * as vscode from 'vscode';
+import { Method } from './Method';
 
 export class PrototypeCreator {
   private static validate(document: vscode.TextDocument): boolean {
-    return document.languageId === "c";
+    return document.languageId === 'c';
   }
 
   public static execute() {
@@ -16,20 +16,15 @@ export class PrototypeCreator {
       return;
     }
 
-    console.log("Creating prototypes");
+    console.log('Creating prototypes');
 
     //Get Function declarations
-    const decs: vscode.TextLine[] = PrototypeCreator.getFunctionDeclarations(
-      document
-    );
+    const decs: vscode.TextLine[] = PrototypeCreator.getFunctionDeclarations(document);
     const declarations = decs.map((dec) => Method.parseToMethod(dec));
     const mainLine = decs[0].lineNumber;
 
     //Get prototypes
-    const prototypes: number[] = PrototypeCreator.getFunctionPrototypes(
-      document,
-      mainLine
-    ); //All prototypes are before main function
+    const prototypes: number[] = PrototypeCreator.getFunctionPrototypes(document, mainLine); //All prototypes are before main function
 
     //Apply edits
     vscode.window.showTextDocument(document, 1, false).then((e) => {
@@ -44,29 +39,23 @@ export class PrototypeCreator {
 
         //If there were no prototypes we need the extra space to seperate from includes
         if (prototypes.length === 0) {
-          edit.insert(new vscode.Position(mainLine - 1, 0), "\n");
+          edit.insert(new vscode.Position(mainLine - 1, 0), '\n');
         }
 
         //Create prototypes
         declarations.forEach((dec) => {
           //Make sure we don't prototype the main function
-          if (dec.name === "main") {
+          if (dec.name === 'main') {
             return;
           }
 
-          edit.insert(
-            new vscode.Position(mainLine - 1, 0),
-            dec.createPrototype()
-          );
+          edit.insert(new vscode.Position(mainLine - 1, 0), dec.createPrototype());
         });
       });
     });
   }
 
-  private static getFunctionPrototypes(
-    document: vscode.TextDocument,
-    mainLine: number
-  ) {
+  private static getFunctionPrototypes(document: vscode.TextDocument, mainLine: number) {
     const prototypes: number[] = [];
 
     for (let i = 0; i < mainLine; i++) {
@@ -78,17 +67,17 @@ export class PrototypeCreator {
       }
 
       //If its an include
-      if (line.text.includes("#include")) {
+      if (line.text.includes('#include')) {
         continue;
       }
 
       //Constant
-      if (line.text.includes("#define")) {
+      if (line.text.includes('#define')) {
         continue;
       }
 
       //If its a struct
-      if (line.text.includes("struct")) {
+      if (line.text.includes('struct')) {
         continue;
       }
 
@@ -104,15 +93,13 @@ export class PrototypeCreator {
     return prototypes;
   }
 
-  public static getFunctionDeclarations(
-    document: vscode.TextDocument
-  ): vscode.TextLine[] {
+  public static getFunctionDeclarations(document: vscode.TextDocument): vscode.TextLine[] {
     const decs = [];
 
     //Find where the main function is
     let mainLine = -1;
     for (let i = 0; i < document.lineCount; i++) {
-      if (document.lineAt(i).text.startsWith("int main")) {
+      if (document.lineAt(i).text.startsWith('int main')) {
         mainLine = i;
         break;
       }
@@ -143,10 +130,10 @@ export class PrototypeCreator {
     for (let i = 0; i < line; i++) {
       const text = document.lineAt(i).text;
 
-      if (text.includes("{")) {
+      if (text.includes('{')) {
         indentLevel++;
       }
-      if (text.includes("}")) {
+      if (text.includes('}')) {
         indentLevel--;
       }
     }
