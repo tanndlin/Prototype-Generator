@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
-import { PrototypeCreator } from './classes/PrototypeCreator';
-import { MethodCreator } from './classes/MethodCreator';
+import { PrototypeCreator } from './classes/Prototype/PrototypeCreator';
+import { MethodCreator } from './classes/Prototype/MethodCreator';
 import { MyCodeLensProvider } from './classes/CodeLensProvider';
 import { Helper } from './classes/Helper';
+import { Linter } from './classes/Linter/Linter';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "prototype-generator" is now active!');
@@ -22,6 +23,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('prototype-generator.getMethodReport', Helper.getMethodReport)
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('prototype-generator.lint', Linter.execute)
   );
 
   const docSelector = {

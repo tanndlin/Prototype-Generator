@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { PrototypeCreator } from './PrototypeCreator';
+import { PrototypeCreator } from './Prototype/PrototypeCreator';
 
 export class MyCodeLensProvider implements vscode.CodeLensProvider {
   async provideCodeLenses(document: vscode.TextDocument): Promise<vscode.CodeLens[]> {

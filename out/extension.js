@@ -2,20 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
-const PrototypeCreator_1 = require("./classes/PrototypeCreator");
-const MethodCreator_1 = require("./classes/MethodCreator");
+const PrototypeCreator_1 = require("./classes/Prototype/PrototypeCreator");
+const MethodCreator_1 = require("./classes/Prototype/MethodCreator");
 const CodeLensProvider_1 = require("./classes/CodeLensProvider");
 const Helper_1 = require("./classes/Helper");
+const Linter_1 = require("./classes/Linter/Linter");
 function activate(context) {
     console.log('Congratulations, your extension "prototype-generator" is now active!');
     //Register the function as 'createPrototypes' Command
-    context.subscriptions.push(vscode.commands.registerCommand("prototype-generator.createPrototypes", PrototypeCreator_1.PrototypeCreator.execute));
+    context.subscriptions.push(vscode.commands.registerCommand('prototype-generator.createPrototypes', PrototypeCreator_1.PrototypeCreator.execute));
     //Register the function as 'createMethod' Command
-    context.subscriptions.push(vscode.commands.registerCommand("prototype-generator.createMethod", MethodCreator_1.MethodCreator.execute));
-    context.subscriptions.push(vscode.commands.registerCommand("prototype-generator.getMethodReport", Helper_1.Helper.getMethodReport));
-    let docSelector = {
-        language: "c",
-        scheme: "file",
+    context.subscriptions.push(vscode.commands.registerCommand('prototype-generator.createMethod', MethodCreator_1.MethodCreator.execute));
+    context.subscriptions.push(vscode.commands.registerCommand('prototype-generator.getMethodReport', Helper_1.Helper.getMethodReport));
+    context.subscriptions.push(vscode.commands.registerCommand('prototype-generator.lint', Linter_1.Linter.execute));
+    const docSelector = {
+        language: 'c',
+        scheme: 'file',
     };
     context.subscriptions.push(vscode.languages.registerCodeLensProvider(docSelector, new CodeLensProvider_1.MyCodeLensProvider()));
 }
