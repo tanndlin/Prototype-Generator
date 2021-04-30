@@ -7,7 +7,7 @@ export class Linter {
     return document.languageId === 'c';
   }
 
-  public static execute() {
+  public static async execute() {
     const document = window.activeTextEditor?.document;
     if (!document) {
       return;
@@ -18,21 +18,24 @@ export class Linter {
     }
 
     const violations = Linter._getViolations(document);
-    Linter._fixViolations(document, violations);
+    await Linter._fixViolations(document, violations);
   }
 
   private static _getViolations(document: TextDocument): Violations {
     const violations: Violations = {
       curly: LinterFind.checkCurly(document),
+      constant: LinterFind.checkConstant(document),
     };
     return violations;
   }
 
-  private static _fixViolations(document: TextDocument, violations: Violations) {
-    LinterFix.fixCurlyViolations(document, violations.curly);
+  private static async _fixViolations(document: TextDocument, violations: Violations) {
+    await LinterFix.fixCurlyViolations(document, violations.curly);
+    await LinterFix.fixConstantViolations(document, violations.constant);
   }
 }
 
 interface Violations {
   curly: TextLine[];
+  constant: TextLine[];
 }
