@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { PrototypeCreator } from './classes/Prototype/PrototypeCreator';
 import { MethodCreator } from './classes/Prototype/MethodCreator';
 import { MyCodeLensProvider } from './classes/CodeLensProvider';
-import { Helper } from './classes/Helper';
 import { Linter } from './classes/Linter/Linter';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -19,10 +18,6 @@ export function activate(context: vscode.ExtensionContext) {
   //Register the function as 'createMethod' Command
   context.subscriptions.push(
     vscode.commands.registerCommand('prototype-generator.createMethod', MethodCreator.execute)
-  );
-
-  context.subscriptions.push(
-    vscode.commands.registerCommand('prototype-generator.getMethodReport', Helper.getMethodReport)
   );
 
   context.subscriptions.push(

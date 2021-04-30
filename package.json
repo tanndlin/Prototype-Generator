@@ -28,11 +28,6 @@
         "category": "Prototype Generator"
       },
       {
-        "command": "prototype-generator.methodInfo",
-        "title": "Show info for Methods",
-        "category": "Prototype Generator"
-      },
-      {
         "command": "prototype-generator.lint",
         "title": "Lint Code",
         "category": "Prototype Generator"
