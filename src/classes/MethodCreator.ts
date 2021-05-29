@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { PrototypeCreator } from './PrototypeCreator';
 
 export class MethodCreator {
-  static defaultReturns: Record<string, any> = {
+  static defaultReturns: Record<string, number | string | boolean> = {
     int: -1,
     void: '',
     float: -1,
@@ -41,7 +41,7 @@ export class MethodCreator {
 
     const targetLine = document.lineCount;
     await vscode.window.showTextDocument(document, 1, false).then(async (e) => {
-      //Delete pre-existing prototypes
+      // Delete pre-existing prototypes
       await e.edit((edit) => {
         edit.insert(
           new vscode.Position(targetLine, 0),
