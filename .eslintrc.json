@@ -1,22 +1,73 @@
 {
-  "root": true,
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module"
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
   },
-  "plugins": ["@typescript-eslint"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "rules": {
-    "@typescript-eslint/naming-convention": "warn",
-    "@typescript-eslint/semi": "warn",
+    "eqeqeq": ["warn", "smart"],
     "curly": "warn",
-    "eqeqeq": "warn",
-    "no-throw-literal": "warn",
-    "semi": "off",
+    "no-var": 2,
     "prefer-const": "error",
     "space-before-blocks": "error",
-    "no-var": 2,
     "spaced-comment": "warn",
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": ["classProperty", "classMethod"],
+        "format": ["camelCase", "UPPER_CASE"],
+        "leadingUnderscore": "require",
+        "modifiers": ["private"]
+      },
+      {
+        "selector": ["classProperty"],
+        "format": ["UPPER_CASE"],
+        "modifiers": ["public", "static"],
+        "leadingUnderscore": "forbid"
+      },
+      {
+        "selector": ["classMethod"],
+        "format": ["camelCase"],
+        "modifiers": ["public", "static"],
+        "leadingUnderscore": "forbid"
+      },
+      {
+        "selector": ["classProperty", "classMethod"],
+        "format": ["UPPER_CASE", "camelCase"],
+        "modifiers": ["protected"],
+        "leadingUnderscore": "forbid"
+      },
+      {
+        "selector": ["classProperty", "classMethod"],
+        "format": ["UPPER_CASE", "camelCase"],
+        "modifiers": ["public"],
+        "leadingUnderscore": "forbid"
+      },
+      {
+        "selector": ["interface"],
+        "format": ["PascalCase", "UPPER_CASE"],
+        "prefix": ["I"]
+      }
+    ],
+    "@typescript-eslint/indent": [
+      "error",
+      2,
+      {
+        "ignoredNodes": ["TSTypeParameterInstantiation"],
+        "SwitchCase": 1
+      }
+    ]
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   }
 }

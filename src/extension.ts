@@ -7,7 +7,7 @@ import { Helper } from './classes/Helper';
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "prototype-generator" is now active!');
 
-  //Register the function as 'createPrototypes' Command
+  // Register the function as 'createPrototypes' Command
   context.subscriptions.push(
     vscode.commands.registerCommand(
       'prototype-generator.createPrototypes',
@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  //Register the function as 'createMethod' Command
+  // Register the function as 'createMethod' Command
   context.subscriptions.push(
     vscode.commands.registerCommand('prototype-generator.createMethod', MethodCreator.execute)
   );

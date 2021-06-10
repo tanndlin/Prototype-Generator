@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { PrototypeCreator } from './PrototypeCreator';
 
 export class MethodCreator {
-  static defaultReturns: Record<string, number | string | boolean> = {
+  static DEFAULT_RETURNS: Record<string, number | string | boolean> = {
     int: -1,
     void: '',
     float: -1,
@@ -10,7 +10,7 @@ export class MethodCreator {
     bool: false,
   };
 
-  private static validate(document: vscode.TextDocument): boolean {
+  private static _validate(document: vscode.TextDocument): boolean {
     return document.languageId === 'c';
   }
 
@@ -20,7 +20,7 @@ export class MethodCreator {
       return;
     }
 
-    if (!MethodCreator.validate(document)) {
+    if (!MethodCreator._validate(document)) {
       return;
     }
 
@@ -37,7 +37,7 @@ export class MethodCreator {
       param = await vscode.window.showInputBox();
     }
 
-    const defaultReturn = MethodCreator.defaultReturns[returnType];
+    const defaultReturn = MethodCreator.DEFAULT_RETURNS[returnType];
 
     const targetLine = document.lineCount;
     await vscode.window.showTextDocument(document, 1, false).then(async (e) => {

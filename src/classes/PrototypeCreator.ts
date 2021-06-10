@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Method } from './Method';
 
 export class PrototypeCreator {
-  private static validate(document: vscode.TextDocument): boolean {
+  public static validate(document: vscode.TextDocument): boolean {
     return document.languageId === 'c';
   }
 
@@ -24,7 +24,7 @@ export class PrototypeCreator {
     const mainLine = decs[0].lineNumber;
 
     // Get prototypes
-    const prototypes: number[] = PrototypeCreator.getFunctionPrototypes(document, mainLine); // All prototypes are before main function
+    const prototypes: number[] = PrototypeCreator._getFunctionPrototypes(document, mainLine); // All prototypes are before main function
 
     // Apply edits
     vscode.window.showTextDocument(document, 1, false).then((e) => {
@@ -37,7 +37,7 @@ export class PrototypeCreator {
           edit.delete(new vscode.Range(start, end));
         });
 
-        // If there were no prototypes we need the extra space to seperate from includes
+        // If there were no prototypes we need the extra space to separate from includes
         if (prototypes.length === 0) {
           edit.insert(new vscode.Position(mainLine - 1, 0), '\n');
         }
@@ -55,7 +55,7 @@ export class PrototypeCreator {
     });
   }
 
-  private static getFunctionPrototypes(document: vscode.TextDocument, mainLine: number) {
+  private static _getFunctionPrototypes(document: vscode.TextDocument, mainLine: number) {
     const prototypes: number[] = [];
 
     for (let i = 0; i < mainLine; i++) {
@@ -87,7 +87,7 @@ export class PrototypeCreator {
       }
 
       // If none of the conditions are true,
-      // its a function that needsto be prototyped
+      // its a function that needs to be prototyped
       prototypes.push(i);
     }
     return prototypes;
