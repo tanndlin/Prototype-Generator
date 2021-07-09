@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Helper = void 0;
-//This is only here to have a registerable command for codelens
+// This is only here to have a registerable command for codelens
 class Helper {
     static getMethodReport() {
         return __awaiter(this, void 0, void 0, function* () {
-            //TODO
+            // TODO
             return;
         });
     }

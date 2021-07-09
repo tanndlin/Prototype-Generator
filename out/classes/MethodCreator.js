@@ -13,8 +13,8 @@ exports.MethodCreator = void 0;
 const vscode = require("vscode");
 const PrototypeCreator_1 = require("./PrototypeCreator");
 class MethodCreator {
-    static validate(document) {
-        return document.languageId === "c";
+    static _validate(document) {
+        return document.languageId === 'c';
     }
     static execute() {
         var _a;
@@ -23,7 +23,7 @@ class MethodCreator {
             if (!document) {
                 return;
             }
-            if (!MethodCreator.validate(document)) {
+            if (!MethodCreator._validate(document)) {
                 return;
             }
             const returnType = yield vscode.window.showInputBox();
@@ -37,13 +37,12 @@ class MethodCreator {
                 params.push(param);
                 param = yield vscode.window.showInputBox();
             }
-            let defaultReturn = MethodCreator.defaultReturns[returnType];
+            const defaultReturn = MethodCreator.DEFAULT_RETURNS[returnType];
             const targetLine = document.lineCount;
             yield vscode.window.showTextDocument(document, 1, false).then((e) => __awaiter(this, void 0, void 0, function* () {
-                //Delete pre-existing prototypes
+                // Delete pre-existing prototypes
                 yield e.edit((edit) => {
-                    edit.insert(new vscode.Position(targetLine, 0), `\n${returnType} ${name}(${params.join(", ")})` +
-                        `{\n\n\treturn ${defaultReturn};\n}`);
+                    edit.insert(new vscode.Position(targetLine, 0), `\n${returnType} ${name}(${params.join(', ')})` + `{\n\n\treturn ${defaultReturn};\n}`);
                 });
             }));
             PrototypeCreator_1.PrototypeCreator.execute();
@@ -51,9 +50,9 @@ class MethodCreator {
     }
 }
 exports.MethodCreator = MethodCreator;
-MethodCreator.defaultReturns = {
+MethodCreator.DEFAULT_RETURNS = {
     int: -1,
-    void: "",
+    void: '',
     float: -1,
     double: -1,
     bool: false,
