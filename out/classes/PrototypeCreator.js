@@ -68,6 +68,10 @@ class PrototypeCreator {
             if (line.text.includes('struct')) {
                 continue;
             }
+            // If its a file global
+            if (line.text.includes('FILE')) {
+                continue;
+            }
             // If its inside a struct
             if (PrototypeCreator.getIndentLevel(document, i) > 0) {
                 continue;
