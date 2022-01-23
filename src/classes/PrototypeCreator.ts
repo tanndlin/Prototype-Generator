@@ -2,8 +2,10 @@ import * as vscode from 'vscode';
 import { Method } from './Method';
 
 export class PrototypeCreator {
+  public static WHITELISTED_TERMS: string[] = ['#include', '#define', 'struct', 'FILE', 'using'];
+
   public static validate(document: vscode.TextDocument): boolean {
-    return document.languageId === 'c';
+    return document.languageId === 'c' || document.languageId === 'cpp';
   }
 
   public static execute() {
@@ -66,23 +68,8 @@ export class PrototypeCreator {
         continue;
       }
 
-      // If its an include
-      if (line.text.includes('#include')) {
-        continue;
-      }
-
-      // Constant
-      if (line.text.includes('#define')) {
-        continue;
-      }
-
-      // If its a struct
-      if (line.text.includes('struct')) {
-        continue;
-      }
-
-      // If its a file global
-      if (line.text.includes('FILE')) {
+      // If its an include`
+      if (this.WHITELISTED_TERMS.some((term) => line.text.includes(term))) {
         continue;
       }
 

@@ -5,7 +5,7 @@ const vscode = require("vscode");
 const Method_1 = require("./Method");
 class PrototypeCreator {
     static validate(document) {
-        return document.languageId === 'c';
+        return document.languageId === 'c' || document.languageId === 'cpp';
     }
     static execute() {
         var _a;
@@ -56,20 +56,8 @@ class PrototypeCreator {
             if (line.text.length === 0) {
                 continue;
             }
-            // If its an include
-            if (line.text.includes('#include')) {
-                continue;
-            }
-            // Constant
-            if (line.text.includes('#define')) {
-                continue;
-            }
-            // If its a struct
-            if (line.text.includes('struct')) {
-                continue;
-            }
-            // If its a file global
-            if (line.text.includes('FILE')) {
+            // If its an include`
+            if (this.WHITELISTED_TERMS.some((term) => line.text.includes(term))) {
                 continue;
             }
             // If its inside a struct
@@ -124,4 +112,5 @@ class PrototypeCreator {
     }
 }
 exports.PrototypeCreator = PrototypeCreator;
+PrototypeCreator.WHITELISTED_TERMS = ['#include', '#define', 'struct', 'FILE', 'using'];
 //# sourceMappingURL=PrototypeCreator.js.map
