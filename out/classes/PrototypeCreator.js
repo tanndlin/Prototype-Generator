@@ -21,21 +21,24 @@ class PrototypeCreator {
         const decs = PrototypeCreator.getFunctionDeclarations(document);
         const declarations = decs.map((dec) => Method_1.Method.parseToMethod(dec));
         const mainLine = decs[0].lineNumber;
+        // Start one the line after the last include
+        const startLine = PrototypeCreator._getStartLine(document);
         // Get prototypes
-        const prototypes = PrototypeCreator._getFunctionPrototypes(document, mainLine); // All prototypes are before main function
+        const existingPrototypes = PrototypeCreator._getFunctionPrototypes(document, mainLine); // All prototypes are before main function
+        console.log(existingPrototypes);
         // Apply edits
         vscode.window.showTextDocument(document, 1, false).then((e) => {
             // Delete pre-existing prototypes
             e.edit((edit) => {
-                prototypes.forEach((lineNum) => {
-                    // Delete all in line, and the \n on the next line
+                existingPrototypes.forEach((lineNum) => {
+                    // // Delete all in line, and the \n on the next line
                     const start = new vscode.Position(lineNum, 0);
                     const end = new vscode.Position(lineNum + 1, 0);
                     edit.delete(new vscode.Range(start, end));
                 });
                 // If there were no prototypes we need the extra space to separate from includes
-                if (prototypes.length === 0) {
-                    edit.insert(new vscode.Position(mainLine - 1, 0), '\n');
+                if (existingPrototypes.length === 0) {
+                    edit.insert(new vscode.Position(startLine + 1, 0), '\n');
                 }
                 // Create prototypes
                 declarations.forEach((dec) => {
@@ -43,7 +46,7 @@ class PrototypeCreator {
                     if (dec.name === 'main') {
                         return;
                     }
-                    edit.insert(new vscode.Position(mainLine - 1, 0), dec.createPrototype());
+                    edit.insert(new vscode.Position(startLine + 2, 0), dec.createPrototype());
                 });
             });
         });
@@ -66,9 +69,22 @@ class PrototypeCreator {
             }
             // If none of the conditions are true,
             // its a function that needs to be prototyped
-            prototypes.push(i);
+            const prototypeRegex = /[_\w\d]+ [_\w\d]+\(([_\w\d]+ \*?[_\w\d]+(, [_\w\d]+ \*?[_\w\d]+)*)?\);/g;
+            if (prototypeRegex.test(line.text)) {
+                prototypes.push(i);
+            }
         }
         return prototypes;
+    }
+    static _getStartLine(document) {
+        let startLine = 0;
+        for (let i = 0; i < document.lineCount; i++) {
+            const line = document.lineAt(i);
+            if (line.text.includes('#include') || line.text.includes('#define')) {
+                startLine = i;
+            }
+        }
+        return startLine;
     }
     static getFunctionDeclarations(document) {
         const decs = [];
