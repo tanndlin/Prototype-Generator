@@ -87,7 +87,7 @@ export class PrototypeCreator {
       // If none of the conditions are true,
       // its a function that needs to be prototyped
       const prototypeRegex =
-        /[_\w\d]+ [_\w\d]+\(([_\w\d]+ \*?[_\w\d]+(, [_\w\d]+ \*?[_\w\d]+)*)?\);/g;
+        /[_\w\d]+ \**[_\w\d]+\(([_\w\d]+ \*?[_\w\d]+(, [_\w\d]+ \*?[_\w\d]+)*)?\);/g;
 
       if (prototypeRegex.test(line.text)) {
         prototypes.push(i);
