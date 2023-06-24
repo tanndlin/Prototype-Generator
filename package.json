@@ -3,15 +3,16 @@
   "displayName": "Prototype Generator",
   "description": "Creates prototpyes of functions in your C code",
   "version": "1.0.0",
+  "publisher": "tanndlin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tanndlin/Prototype-Generator.git"
+  },
   "engines": {
     "vscode": "^1.52.0"
   },
   "categories": [
     "Other"
-  ],
-  "activationEvents": [
-    "onCommand:prototype-generator.createPrototypes",
-    "onCommand:prototype-generator.createMethod"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -39,7 +40,12 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./",
+    "package": "npm run esbuild && vsce package"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
