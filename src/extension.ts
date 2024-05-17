@@ -1,10 +1,28 @@
 import * as vscode from 'vscode';
-import { PrototypeCreator } from './classes/PrototypeCreator';
-import { MethodCreator } from './classes/MethodCreator';
-import { MyCodeLensProvider } from './classes/CodeLensProvider';
-import { Helper } from './classes/Helper';
+import { MyCodeLensProvider } from './CodeLensProvider';
+import { Helper } from './Helper';
+import { MethodCreator } from './MethodCreator';
+import { PrototypeCreator } from './PrototypeCreator';
 
 export function activate(context: vscode.ExtensionContext) {
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
+  console.log('Congratulations, your extension "prototype-generator" is now active!');
   console.log('Congratulations, your extension "prototype-generator" is now active!');
 
   // Register the function as 'createPrototypes' Command
@@ -14,6 +32,8 @@ export function activate(context: vscode.ExtensionContext) {
       PrototypeCreator.execute
     )
   );
+
+  vscode.window.showInformationMessage('Prototype Generator is now active!');
 
   // Register the function as 'createMethod' Command
   context.subscriptions.push(
