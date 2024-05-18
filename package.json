@@ -22,16 +22,6 @@
         "command": "prototype-generator.createPrototypes",
         "title": "Create Prototypes",
         "category": "Prototype Generator"
-      },
-      {
-        "command": "prototype-generator.createMethod",
-        "title": "Create Method",
-        "category": "Prototype Generator"
-      },
-      {
-        "command": "prototype-generator.methodInfo",
-        "title": "Show info for Methods",
-        "category": "Prototype Generator"
       }
     ]
   },
